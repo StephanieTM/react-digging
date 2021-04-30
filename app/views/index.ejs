@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <title>FE Starter</title>
+  <link href="/assets/images/juice.png" type="image/x-icon" rel="shortcut icon">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+  <meta name="format-detection" content="telephone=no">
+  <%= htmlWebpackPlugin.tags.headTags %>
+</head>
+<body>
+  <div id="app">
+    <div class="pk-spin pk-spin-spinning">
+      <span class="pk-spin-dot pk-spin-dot-spin">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+      <div class="pk-spin-text">Loading...</div>
+    </div>
+  </div>
+  <%= htmlWebpackPlugin.tags.bodyTags %>
+</body>
+</html>

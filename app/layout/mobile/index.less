@@ -1,0 +1,91 @@
+@initial-hidden: 100px;
+@footer-outer-height: 200px;
+@footer-inner-height: 100px;
+
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.app-footer-container {
+  position: fixed;
+  bottom: -@initial-hidden;
+  z-index: 200;
+  width: 100%;
+}
+
+.app-footer {
+  height: @footer-outer-height;
+  text-align: center;
+  background: transparent;
+
+  .outer-circle {
+    width: @footer-outer-height;
+    height: @footer-outer-height;
+    margin: 0 auto;
+    background-color: @primary-color;
+    border-radius: 50%;
+  }
+
+  .inner-circle {
+    position: fixed;
+    width: @footer-inner-height;
+    height: @footer-inner-height;
+    margin: calc((@footer-outer-height - @footer-inner-height) / 2);
+    background-color: @secondary-color;
+    border-radius: 50%;
+  }
+
+  .menu-container {
+    position: relative;
+    height: 100%;
+  }
+
+  .menu-item {
+    display: inline-block;
+    width: 50px;
+    font-family: Rubik, Helvetica, Arial, Verdana, Tahoma, sans-serif;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    opacity: 0.5;
+
+    &.menu-top {
+      position: absolute;
+      top: 15px;
+      left: 75px;
+      opacity: 1;
+    }
+
+    &.menu-left {
+      position: absolute;
+      top: 70px;
+      left: 2px;
+    }
+
+    &.menu-right {
+      position: absolute;
+      top: 70px;
+      right: 2px;
+    }
+  }
+}
+
+.app-footer-mask {
+  position: fixed;
+  top: 0;
+  z-index: 199;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.hello {
+  padding-top: 200px;
+  font-family: Rubik, Helvetica, Arial, Verdana, Tahoma, sans-serif;
+  font-size: 20px;
+  color: cadetblue;
+  text-align: center;
+}

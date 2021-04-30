@@ -1,0 +1,33 @@
+@app-header-height: 60px;
+
+.app-container {
+  height: 100%;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: @app-header-height;
+  overflow: hidden;
+  box-shadow: 0 1px 5px #ddd;
+}
+
+.app-body {
+  display: flex;
+  height: calc(100% - @app-header-height);
+}
+
+.app-menu {
+  width: 240px;
+  height: 100%;
+  overflow: auto;
+  border-right: 1px solid #eee;
+  box-shadow: 0 1px 5px #eee;
+}
+
+.app-content {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
