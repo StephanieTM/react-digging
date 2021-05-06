@@ -1,6 +1,7 @@
 import { ComponentType } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
-export type ILoadComponent = Promise<{ default: ComponentType<JSX.Element>}>;
+export type ILoadComponent = Promise<{ default: ComponentType<RouteComponentProps>}>;
 
 export interface IRouteConfig {
   title: string;
@@ -33,6 +34,17 @@ const pcRoutes: IRouteConfig[] = [
         title: 'User',
         link: '/backend-demo/user',
         component: (): ILoadComponent => import('src/components/backendDemo/User'),
+      },
+    ],
+  },
+  {
+    title: 'React Topics',
+    code: 'react-topics',
+    children: [
+      {
+        title: 'render props vs. hooks',
+        link: '/react-topics/render-props-vs-hooks',
+        component: (): ILoadComponent => import('src/react-topics/render-props-vs-hooks'),
       },
     ],
   },
