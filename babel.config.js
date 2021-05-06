@@ -11,6 +11,7 @@ module.exports = (api) => {
     ['import', { libraryName: 'antd', style: true }, 'antd'],
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-transform-runtime',
+    '@babel/plugin-proposal-class-properties',
     isProd ? null : 'react-hot-loader/babel'
   ].filter(Boolean);
 
