@@ -46,6 +46,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/react-topics/render-props-vs-hooks',
         component: (): ILoadComponent => import('src/react-topics/render-props-vs-hooks'),
       },
+      {
+        title: 'will unused props cause rerender',
+        link: '/react-topics/will-unused-props-cause-rerender',
+        component: (): ILoadComponent => import('src/react-topics/will-unused-props-cause-rerender'),
+      },
     ],
   },
 ];
