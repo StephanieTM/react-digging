@@ -8,8 +8,8 @@ const { TabPane } = Tabs;
 enum CompType {
   normal = 'normal',
   reactMemo = 'React.memo()',
-  useMemo = 'useMemo()',
-  useMemoComp = 'useMemo() comp',
+  useMemoBad = 'useMemo() bad example',
+  useMemoComp = 'useMemo() component',
 }
 
 export default function Comp(): JSX.Element {
@@ -22,7 +22,7 @@ export default function Comp(): JSX.Element {
       <Tabs activeKey={compType} onChange={key => setCompType(key as CompType)}>
         <TabPane tab={CompType.normal} key={CompType.normal} />
         <TabPane tab={CompType.reactMemo} key={CompType.reactMemo} />
-        <TabPane tab={CompType.useMemo} key={CompType.useMemo} />
+        <TabPane tab={CompType.useMemoBad} key={CompType.useMemoBad} />
         <TabPane tab={CompType.useMemoComp} key={CompType.useMemoComp} />
       </Tabs>
       {
@@ -50,14 +50,14 @@ export default function Comp(): JSX.Element {
         ) : null
       }
       {
-        compType === CompType.useMemo ? (
+        compType === CompType.useMemoBad ? (
           <>
-            <h3>With useMemo()</h3>
+            <h3>With useMemo() // this is a bad example</h3>
             <ParentComponent
               renderCounts={() => (
                 <>
-                  <Button onClick={incrementTimes}>Force render</Button>
                   <UseMemoCounts memoizedValue={memoizedValue} resetMemoizedValue={resetMemoizedValue} />
+                  <Button onClick={incrementTimes}>Force render</Button>
                 </>
               )}
             />
@@ -67,7 +67,7 @@ export default function Comp(): JSX.Element {
       {
         compType === CompType.useMemoComp ? (
           <>
-            <h3>With useMemo() comp</h3>
+            <h3>With useMemo() component</h3>
             <ParentComponent
               renderCounts={() => (
                 <>
