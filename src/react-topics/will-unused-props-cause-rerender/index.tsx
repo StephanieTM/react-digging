@@ -5,7 +5,7 @@ import SomeComponent from './Comp';
 const NAMES = ['Amber', 'Beth', 'Catherine'];
 const UNUSED_PROPS = ['AhHah', 'BlaBla', 'CoughCough'];
 
-export default function (): JSX.Element {
+export default function Comp(): JSX.Element {
   const [name, setName] = useState<number>(0);
   const [unusedProp, setUnusedProp] = useState<number>(0);
 
