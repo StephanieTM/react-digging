@@ -51,6 +51,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/react-topics/will-unused-props-cause-rerender',
         component: (): ILoadComponent => import('src/react-topics/will-unused-props-cause-rerender'),
       },
+      {
+        title: 'React.memo vs useMemo',
+        link: '/react-topics/react-memo-vs-usememo',
+        component: (): ILoadComponent => import('src/react-topics/react-memo-vs-usememo'),
+      },
     ],
   },
 ];
