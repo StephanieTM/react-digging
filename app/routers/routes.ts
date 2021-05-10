@@ -56,6 +56,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/react-topics/react-memo-vs-usememo',
         component: (): ILoadComponent => import('src/react-topics/react-memo-vs-usememo'),
       },
+      {
+        title: 'how to get the previous props or state',
+        link: '/react-topics/how-to-get-prev-props-or-state',
+        component: (): ILoadComponent => import('src/react-topics/how-to-get-prev-props-or-state'),
+      },
     ],
   },
 ];
