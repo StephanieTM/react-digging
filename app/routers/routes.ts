@@ -61,6 +61,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/react-topics/how-to-get-prev-props-or-state',
         component: (): ILoadComponent => import('src/react-topics/how-to-get-prev-props-or-state'),
       },
+      {
+        title: 'useEffect cleanup function',
+        link: '/react-topics/useeffect-cleanup-function',
+        component: (): ILoadComponent => import('src/react-topics/useeffect-cleanup-function'),
+      },
     ],
   },
 ];
