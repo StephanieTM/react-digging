@@ -184,3 +184,69 @@ cleanup function 用来清除副作用，但并不是所有 useEffect 都需要 
     );
   }
   ```
+
+## Demo
+
+本 demo 研究了 useEffect 、 cleanup function 的作用和时序，详细说明如下。
+
+console.log 打印顺序：
+
+- 点击 Mount child comp 后
+
+```text
+ | 1. before everything                                                                   |
+ | 2. before effects                                                                      |
+ | 3. after effects                                                                       |
+ |======================================== render ========================================|
+ | 4. after render                                                                        |
+ | 5. after the first render                                                              |
+ | 6. after the render caused by changing of someProp (including the first render)        |
+ | 7. after the render caused by changing of someState (including the first render)       |
+```
+
+- 2000ms 后， useEffect 中的异步方法 resolve ，调用 setState ，触发 re-render
+
+```text
+ | 1. before everything                                                                   |
+ | 2. before effects                                                                      |
+ | 3. after effects                                                                       |
+ |======================================== render ========================================|
+ | 4. cleanup function with no dependency array                                           |
+ | 5. after render                                                                        |
+```
+
+- 点击 Change state ，调用 setState ，触发 re-render
+
+```text
+ | 1. before everything                                                                   |
+ | 2. before effects                                                                      |
+ | 3. after effects                                                                       |
+ |======================================== render ========================================|
+ | 4. cleanup function with no dependency array                                           |
+ | 5. cleanup function with [someState] dependency array                                  |
+ | 6. after render                                                                        |
+ | 7. after the render caused by changing of someState (including the first render)       |
+```
+
+- 点击 Change props ，传入的 props 值变更，触发 re-render
+
+```text
+ | 1. before everything                                                                   |
+ | 2. before effects                                                                      |
+ | 3. after effects                                                                       |
+ |======================================== render ========================================|
+ | 4. cleanup function with no dependency array                                           |
+ | 5. cleanup function with [someProp] dependency array                                   |
+ | 6. after render                                                                        |
+ | 7. after the render caused by changing of someProp (including the first render)        |
+```
+
+## 总结
+
+> One of the problems we outlined in the Motivation for Hooks is that class lifecycle methods often contain unrelated logic, but related logic gets broken up into several methods.
+
+hooks 被提出的动机之一就是在 class component 的生命周期方法中，经常会包含互不相关的逻辑，但是有关联的逻辑往往又被拆分到不同的生命周期方法中。
+
+> Hooks let us split the code based on what it is doing rather than a lifecycle method name. React will apply every effect used by the component, in the order they were specified.
+
+而 hooks 则允许我们基于代码行为而非生命周期名称来分割代码， React 会按照声明的顺序依次触发每一个副作用。
