@@ -6,7 +6,7 @@
 
 简单来说， memoization 是一种性能优化的策略，它允许我们把递归函数或包含复杂计算的函数调用的值缓存下来，当下一次这些函数以同样的入参被调用时可以直接使用缓存值，而不是再计算一次。
 
-## 为什么在react中使用memoization
+## 为什么在 react 中使用 memoization
 
 默认情况下，在 react 函数组件中，某个 props 的变化会触发整个组件的重新渲染，包括那些并未使用变更 props 的子组件。
 
@@ -19,7 +19,7 @@
 - 计数器变更的原因：每次变更奶酪时 ParentComponent 组件内部的两个 state (cheeseType 和 wine) 依次被更新，触发了两次重新渲染
 - ParentComponent 重新渲染时会强制 Counts 也重新渲染，尽管 Counts 组件内部没有任何变化发生
 
-即**如果一个组件(可能很复杂)在父组件的无关变量更新时也被触发强制重绘，会造成不必要的性能浪费，甚至导致性能问题，这就是为什么react需要memoization**
+即**如果一个组件(可能很复杂)在父组件的无关变量更新时也被触发强制重绘，会造成不必要的性能浪费，甚至导致性能问题，这就是为什么 react 需要 memoization**
 
 ## 什么是 React.memo()
 
@@ -41,7 +41,7 @@ React.memo() 是高阶组件 HOC ，即接受一个组件作为 prop ，并返�
 
 我们可以使用useMemo将需要渲染的JSX缓存起来，这样当父组件中与子组件无关的state/props变化时，渲染的是被缓存的JSX。
 
-***注意：* 本 demo 中有两个关于useMemo的例子，其中一个来源于本文引用的 blog ，经确认为 broken case**
+***注意：* 本 demo 中有两个关于 useMemo 的例子，其中一个来源于本文引用的 blog ，经确认为 broken case**
 
 ## Further Reading
 
