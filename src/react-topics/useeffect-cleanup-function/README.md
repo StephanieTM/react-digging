@@ -33,3 +33,154 @@ useEffect 同 useState 等其他 hook 一样，需要在函数组件内部或 cu
 若确实需要使用异步方法，可以在 useEffect 的第一个参数中执行一个异步方法，而不是直接传递异步方法作为第一个参数。
 
 另外，useEffect 原生不支持 async function 的主要原因在于异步方法会造成 race condition ，若未得到妥善处理会导致 bug 的发生，为了[解决 race condition](https://maxrozen.com/race-conditions-fetching-data-react-with-useeffect) ，可以使用 cleanup function (可配合AbortController) 来清除副作用。
+
+## cleanup function
+
+已知 useEffect 的第一个参数是副作用函数，会在渲染之后被执行，如果这个函数返回另一个函数，这个被返回的函数就是 **cleanup function** 。
+
+cleanup function 用来清除副作用，但并不是所有 useEffect 都需要 cleanup function ，假如只是类似于执行 DOM 操作、发起网络请求、打印日志等副作用，是不需要清除的。但若是数据订阅（请求外部数据后通过 setState 将数据缓存在 state 中）等副作用，不清除的话可能会引发内存泄漏等bug。
+
+### 触发时机
+
+组件卸载时会触发 cleanup function 的执行。
+
+> React performs the cleanup when the component unmounts. However, as we learned earlier, effects run for every render and not just once. This is why **React also cleans up effects from the previous render before running the effects next time**.
+>
+> It cleans up the previous effects before applying the next effects.
+
+不过我们也知道， effects 并不是只执行一次，而是每次渲染都会执行，这就是为什么在上一次渲染结束以后、下一次 effects 被执行之前也会触发 cleanup function 的执行。
+
+### 使用 cleanup function 可以解决的问题
+
+- **race condition**
+
+  设想一个用来展示用户好友数量的组件，当 prop userId 变化时根据 userId 查询某用户的好友列表，并将好友数量展示在页面上。此组件使用一个依赖项为 [userId] 的 useEffect ，在 useEffect 内部通过异步方法获取数据，并使用获取到的数据更新 state friendList 。
+
+  ```jsx
+  import react, { useEffect, useState } from 'react';
+  import { getFriendListByUserId } from './services';
+
+  function FriendNum(props) {
+    const { userId } = props;
+    const [friendList, setFriendList] = useState([]);
+
+    useEffect(() => {
+      (async () => {
+        const data = await getFriendListByUserId(userId);
+        setFriendList(data);
+      })();
+    }, [userId]);
+
+    return (
+      <div>
+        User {userId} has {friendList.length} friends.
+      </div>
+    );
+  }
+  ```
+
+  当 prop userId 不变时，组件会正常运作，但是当其快速发生变化（会导致多个异步方法同时运行，我们无法确定哪一个会先运行成功）时，问题就会发生：最后成功的异步方法会决定最终的 friendList 值，但与其对应的 userId 可能已经过期了，比如快速将 userId 更换为1、2、3、4、5， userId 为3的那次异步方法是最晚 resolve 的，那么最终 friendList 值会稳定在 userId 为3的用户的好友列表，但实际上 userId 已经变成5了，这显然是一个问题，这就是上文提到的 race condition 。
+
+  为了解决这个问题，我们可以使用 useEffect 来消除副作用。在 useEffect 中声明一个变量 mounted 并初始化为 true ，用来标识某次渲染时的 effect 是否是实时的而不是过时的，并且在 cleanup function 中将这个值更新为 false ，即每当 userId 变化导致组件重新渲染时，这次渲染的 mounted 为 true ，当下一次由于 userId 变化导致的渲染发生时，刚才那次渲染的 mounted 被置为 false 。有了这个标识，我们在副作用的异步方法成功后根据标识来决定要不要更新 state ，如果一个已经过时的副作用中的异步方法成功了，那我们就无需更新 state ，因为我们不需要一个无法与实时的 userId 对应的过期的副作用结果。
+
+  ```jsx
+  import react, { useEffect, useState } from 'react';
+  import { getFriendListByUserId } from './services';
+
+  function FriendNum(props) {
+    const { userId } = props;
+    const [friendList, setFriendList] = useState([]);
+
+    useEffect(() => {
+      let mounted = true;
+
+      (async () => {
+        const data = await getFriendListByUserId(userId);
+        if (mounted) {
+          setFriendList(data);
+        }
+      })();
+
+      return () => {
+        mounted = false;
+      };
+    }, [userId]);
+
+    return (
+      <div>
+        User {userId} has {friendList.length} friends.
+      </div>
+    );
+  }
+  ```
+
+- **memory leak**
+  cleanup function 还可以解决 useEffect 中的内存泄漏问题。
+
+  ```jsx
+  import react, { useEffect, useState } from 'react';
+  import { getDailyNews } from './services';
+
+  function NewsList() {
+    const [newsList, setNewsList] = useState([]);
+
+    useEffect(() => {
+      (async () => {
+        const data = await getDailyNews();
+        setNewsList(data);
+      })();
+    }, []);
+
+    return (
+      <div>
+        {newsList.map(item => (
+          <div key={item.id}>
+            title: {item.title}
+            content: {item.content}
+          </div>
+        ))}
+      </div>
+    );
+  }
+  ```
+
+  此问题与 race condition 类似，也是在 useEffect 中调用了异步方法，当异步方法还未成功时组件被卸载，导致异步方法成功后组件试图更新某个 state 时失败，因为组件已经卸载，该 state 已经不存在了。
+
+  比如 getDailyNews 需要大概2秒钟才能返回，如果组件在挂载后2秒钟以内卸载，我们会在控制台中看到这样的 warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+
+  解决方案与 race condition 类似，通过一个变量来标识组件是否已经被卸载了。
+
+  ```jsx
+  import react, { useEffect, useState } from 'react';
+  import { getDailyNews } from './services';
+
+  function NewsList() {
+    const [newsList, setNewsList] = useState([]);
+
+    useEffect(() => {
+      let mounted = true;
+
+      (async () => {
+        const data = await getDailyNews();
+        if (mounted) {
+          setNewsList(data);
+        }
+      })();
+
+      return () => {
+        mounted = false;
+      };
+    }, []);
+
+    return (
+      <div>
+        {newsList.map(item => (
+          <div key={item.id}>
+            title: {item.title}
+            content: {item.content}
+          </div>
+        ))}
+      </div>
+    );
+  }
+  ```
