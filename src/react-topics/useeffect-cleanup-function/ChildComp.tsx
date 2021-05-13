@@ -50,7 +50,7 @@ export default function ChildComp(props: { timestamp: number }): JSX.Element {
     console.log('after the render caused by changing of someProp (including the first render)');
     return () => {
       // this cleanup function gets executed:
-      //   - everytime prop<timestamp> changes
+      //   - everytime prop<timestamp> updates (right after the re-render that change causes, before the next effect applied)
       //   - everytime ChildComp unmounts
       console.log('cleanup function with [someProp] dependency array');
     };
@@ -60,7 +60,7 @@ export default function ChildComp(props: { timestamp: number }): JSX.Element {
     console.log('after the render caused by changing of someState (including the first render)');
     return () => {
       // this cleanup function gets executed:
-      //   - everytime state<state> changes (right after the re-render that change causes)
+      //   - everytime state<state> updates (right after the re-render that change causes, before the next effect applied)
       //   - everytime ChildComp unmounts
       console.log('cleanup function with [someState] dependency array');
     };
