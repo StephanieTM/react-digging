@@ -18,7 +18,7 @@ export default function Comp(): JSX.Element {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <Button onClick={handleNameChange}>Update Used Prop</Button>
       <Button onClick={handleUnusedPropChange}>Update Unused Prop</Button>
       <SomeComponent

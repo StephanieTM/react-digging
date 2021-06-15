@@ -18,7 +18,7 @@ export default function Comp(): JSX.Element {
   const MemoComp = useMemoComp();
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <Tabs activeKey={compType} onChange={key => setCompType(key as CompType)}>
         <TabPane tab={CompType.normal} key={CompType.normal} />
         <TabPane tab={CompType.reactMemo} key={CompType.reactMemo} />

@@ -7,7 +7,7 @@ export default function Comp(): JSX.Element {
   const [timestamp, setTimeStamp] = useState(new Date().getTime());
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <Button onClick={() => setMount(!mount)}>
         {mount ? 'Unmount child comp' : 'Mount child comp'}
       </Button>

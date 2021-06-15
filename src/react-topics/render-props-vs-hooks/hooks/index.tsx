@@ -14,7 +14,6 @@ export default function MouseTracker(): JSX.Element {
           height: '400px',
           border: '1px solid rgba(0, 0, 0, 0.6)',
           borderRadius: '5px',
-          margin: '20px',
         }}
         onMouseMove={onMouseMove}
       >

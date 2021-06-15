@@ -24,10 +24,31 @@
   overflow: auto;
   border-right: 1px solid #eee;
   box-shadow: 0 1px 5px #eee;
+
+  .menu-item {
+    padding: 8px;
+    margin: 8px;
+    cursor: pointer;
+    background-color: rgb(238 204 221 / 20%);
+    border-radius: 10px;
+
+    &.active,
+    &:hover {
+      background-color: rgb(238 204 221 / 40%);
+    }
+
+    &.active {
+      font-weight: 800;
+    }
+  }
 }
 
 .app-content {
   width: 100%;
   height: 100%;
   overflow: auto;
+
+  .content-container {
+    padding: 20px;
+  }
 }
