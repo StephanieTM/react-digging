@@ -28,7 +28,6 @@ export default class ICat extends Component<IProps, IMouse> {
           height: '400px',
           border: '1px solid rgba(0, 0, 0, 0.6)',
           borderRadius: '5px',
-          margin: '20px',
         }}
         onMouseMove={this.handleMouseMove}
       >

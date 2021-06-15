@@ -7,7 +7,7 @@ export default function Comp(): JSX.Element {
   const prevCount = usePrevious(count);
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <Button onClick={() => setCount(count + 1)}>Add count</Button>
       <p>Now: {count}, before: {prevCount}</p>
     </div>

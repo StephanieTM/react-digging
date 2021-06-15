@@ -50,11 +50,7 @@ export default function Comp(props: RouteComponentProps): JSX.Element {
   }
 
   return (
-    <div
-      style={{
-        padding: '20px',
-      }}
-    >
+    <div>
       <h1>Render-Props vs. Hooks</h1>
       <Button onClick={handleSwitch}>{getSwitchText()}</Button>
       {renderComp()}

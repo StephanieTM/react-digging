@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { createContainer } from 'unstated-next';
 import { IRouteConfig, mobileRoutes, pcRoutes } from '../routers/routes';
-import { getApplication } from './utils';
+import { getApplication, findActiveApp } from './utils';
 import { IValue, IApplication } from './interface';
 
 const pcApps = getApplication(pcRoutes);
@@ -13,7 +13,7 @@ function useGlobalStore(): IValue {
   const apps = useMemo(() => {
     return isMobile ? mobileApps : pcApps;
   }, [isMobile]);
-  const [currentApp, setCurrentApp] = useState<IApplication|Record<string, never>>(apps[0] || {});
+  const [currentApp, setCurrentApp] = useState<IApplication|Record<string, never>>(() => findActiveApp(apps));
   const [appDrawerVisible, setAppDrawerVisible] = useState<boolean>(false);
   const menus = useMemo<IRouteConfig[]>(() => {
     return ((currentApp as IApplication).menus || []);
