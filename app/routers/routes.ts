@@ -79,6 +79,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/web-apis/event-propagation',
         component: () => import('src/web-apis/event-propagation'),
       },
+      {
+        title: 'Prevent Default',
+        link: '/web-apis/prevent-default',
+        component: () => import('src/web-apis/prevent-default'),
+      },
     ],
   },
 ];
