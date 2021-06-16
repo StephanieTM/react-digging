@@ -18,6 +18,7 @@ const pcRoutes: IRouteConfig[] = [
   {
     title: 'Home',
     code: 'home',
+    hideInMenu: true,
     children: [
       {
         title: 'Hello World',
@@ -29,6 +30,7 @@ const pcRoutes: IRouteConfig[] = [
   {
     title: 'Backend Demo',
     code: 'backend-demo',
+    hideInMenu: true,
     children: [
       {
         title: 'User',
@@ -65,6 +67,17 @@ const pcRoutes: IRouteConfig[] = [
         title: 'useEffect cleanup function',
         link: '/react-topics/useeffect-cleanup-function',
         component: (): ILoadComponent => import('src/react-topics/useeffect-cleanup-function'),
+      },
+    ],
+  },
+  {
+    title: 'Web APIs',
+    code: 'web-apis',
+    children: [
+      {
+        title: 'Event Propagation',
+        link: '/web-apis/event-propagation',
+        component: () => import('src/web-apis/event-propagation'),
       },
     ],
   },
