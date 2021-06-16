@@ -75,6 +75,11 @@ const pcRoutes: IRouteConfig[] = [
     code: 'web-apis',
     children: [
       {
+        title: 'Event Capture and Event Bubbling',
+        link: '/web-apis/event-capture-and-event-bubbling',
+        component: () => import('src/web-apis/event-capture-and-event-bubbling'),
+      },
+      {
         title: 'Event Propagation',
         link: '/web-apis/event-propagation',
         component: () => import('src/web-apis/event-propagation'),
