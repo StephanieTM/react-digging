@@ -31,13 +31,13 @@ export function getApplication(apps: IRouteConfig[]): IApplication[] {
     }));
 }
 
-export function isMatch(pathname: string, route: IRouteConfig): boolean {
-  if (!route.children) {
+export function isMatch(pathname: string, route: IApplication|IRouteConfig): boolean {
+  if (!(route as IApplication).menus) {
     return !!matchPath(pathname, { path: route.link, exact: true });
   }
 
-  for (let i = 0; i < route.children.length; i++) {
-    if (isMatch(pathname, route.children[i])) {
+  for (let i = 0; i < (route as IApplication).menus.length; i++) {
+    if (isMatch(pathname, (route as IApplication).menus[i])) {
       return true;
     }
   }
