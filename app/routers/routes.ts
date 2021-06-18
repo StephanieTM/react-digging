@@ -68,6 +68,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/react-topics/useeffect-cleanup-function',
         component: (): ILoadComponent => import('src/react-topics/useeffect-cleanup-function'),
       },
+      {
+        title: 'function components vs. classes',
+        link: '/react-topics/function-components-vs-classes',
+        component: (): ILoadComponent => import('src/react-topics/function-components-vs-classes'),
+      },
     ],
   },
   {
