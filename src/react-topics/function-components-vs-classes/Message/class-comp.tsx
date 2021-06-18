@@ -3,8 +3,8 @@ import { Input, Button, message } from 'antd';
 import { ICompState } from '../interface';
 
 export default class ClassComp extends React.Component<Record<string, never>, ICompState> {
-  constructor() {
-    super({});
+  constructor(props = {}) {
+    super(props);
     this.state = {
       msg: '',
     };

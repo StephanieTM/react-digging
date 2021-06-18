@@ -73,6 +73,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/react-topics/function-components-vs-classes',
         component: (): ILoadComponent => import('src/react-topics/function-components-vs-classes'),
       },
+      {
+        title: 'how do hooks work',
+        link: '/react-topics/how-do-hooks-work',
+        component: (): ILoadComponent => import('src/react-topics/how-do-hooks-work'),
+      },
     ],
   },
   {
