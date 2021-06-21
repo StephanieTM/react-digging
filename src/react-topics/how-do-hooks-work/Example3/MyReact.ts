@@ -1,12 +1,11 @@
 import { IMyReact } from './interface';
 
 /**
- * 实现useState
+ * 实现useState，useEffect，但都是单例(同一个组件中不能同时拥有多个state或effect)
  */
 
-// module pattern (function {...})()
 export const MyReact: IMyReact = (function (): IMyReact {
-  let _val: unknown;
+  let _val: unknown, _deps: unknown[];
 
   return {
     render(Component) {
@@ -23,5 +22,14 @@ export const MyReact: IMyReact = (function (): IMyReact {
 
       return [_val as T, setState];
     },
+    useEffect(callback, depArray) {
+      const hasNoDeps = !depArray;
+      const hasChangedDeps = _deps ? !depArray.every((el, i) => el === _deps[i]) : true;
+      if (hasNoDeps || hasChangedDeps) {
+        callback();
+        _deps = depArray;
+      }
+    },
   };
 })();
+

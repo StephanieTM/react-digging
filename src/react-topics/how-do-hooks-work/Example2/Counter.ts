@@ -1,6 +1,7 @@
 import { MyReact } from './MyReact';
+import { IComponent } from './interface';
 
-function Counter() {
+function Counter(): IComponent {
   const [count, setCount] = MyReact.useState(0);
 
   return {
