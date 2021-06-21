@@ -18,7 +18,7 @@ function Counter(): IComponent {
 }
 
 export function tryExample4(): void {
-  let App;
+  let App: IComponent;
   App = MyReact.render(Counter);
   // effect 0 foo
   // render { count: 0, text: 'foo' }

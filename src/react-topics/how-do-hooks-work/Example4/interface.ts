@@ -5,14 +5,15 @@ export interface IComponent {
   noop: () => void;
 }
 
-export type IRender = (Component: () => IComponent) => IComponent;
+export type IRenderReturnType = IComponent|Pick<IComponent, 'title'|'render'>;
+export type IRender<T> = (Component: () => T) => T;
 
 export type IUseState<T> = (initialValue: T) => [T, (newVal: T) => void];
 
 export type IUseEffect = (callback: () => void, depArray: unknown[]) => void;
 
 export interface IMyReact {
-  render: IRender;
+  render<T>(Component: () => T): T;
   useState<T>(initialValue: T): [T, (newVal: T) => void];
   useEffect: IUseEffect;
 }

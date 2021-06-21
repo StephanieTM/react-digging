@@ -1,13 +1,13 @@
-import { IMyReact } from './interface';
+import { IComponent, IMyReact } from './interface';
 
 export const MyReact: IMyReact = (function (): IMyReact {
   const hooks: unknown[] = [];
   let currentHook = 0; // array of hooks, and an iterator
 
   return {
-    render(Component) {
+    render<T>(Component: () => T): T {
       const Comp = Component();
-      Comp.render();
+      (Comp as unknown as IComponent).render();
       currentHook = 0;
       return Comp;
     },
