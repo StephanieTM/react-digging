@@ -1,7 +1,23 @@
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
-const config = require('./webpack.dev');
+const devConfig = require('./webpack.dev');
+const didactConfig = require('./webpack.didact');
 const env = require('./env');
+
+let config = {};
+
+const [type] = process.argv.slice(2);
+switch (type) {
+  case 'didact':
+    config.webpackConfig = didactConfig;
+    config.htmlFilePath = 'views/didact.html';
+    config.ouputPath = 'dist_didact';
+    break;
+  default:
+    config.webpackConfig = devConfig;
+    config.htmlFilePath = 'views/index.html';
+    config.ouputPath = 'dist';
+}
 
 const options = {
   contentBase: './dist',
@@ -10,9 +26,9 @@ const options = {
   port: env.PORT || 3000,
   host: '0.0.0.0',
   historyApiFallback: {
-    index: 'views/index.html',
+    index: config.htmlFilePath,
   },
-  index: 'views/index.html',
+  index: config.htmlFilePath,
   writeToDisk: true,
   proxy: {
     '/api': {
@@ -22,8 +38,8 @@ const options = {
   },
 };
 
-webpackDevServer.addDevServerEntrypoints(config, options);
-const compiler = webpack(config);
+webpackDevServer.addDevServerEntrypoints(config.webpackConfig, options);
+const compiler = webpack(config.webpackConfig);
 const server = new webpackDevServer(compiler, options);
 
 server.listen(options.port, options.host, () => {

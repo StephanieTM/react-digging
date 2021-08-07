@@ -9,6 +9,7 @@
     "build": "NODE_ENV=production webpack --mode production --config webpack.prod.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "dev": "node dev-server.js",
+    "dev-didact": "node dev-server.js didact",
     "lint": "eslint ./app ./src --ext js --ext jsx --ext ts --ext tsx --ignore-pattern .eslintignore",
     "lintStyle": "stylelint ./app/**/*/*.less ./src/**/*/*.less --ignore-pattern .stylelintignore",
     "server": "node server.js"
