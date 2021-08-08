@@ -13,7 +13,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: {
-    app: ['./lib/didact/tutorial/Step1-TheCreateElementFunction.js'],
+    app: ['./lib/didact/demo/index.js'],
   },
   output: {
     filename: 'assets/scripts/[name].bundle.js',
